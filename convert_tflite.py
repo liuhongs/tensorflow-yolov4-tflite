@@ -29,6 +29,8 @@ def representative_data_gen():
 
 def save_tflite():
   converter = tf.lite.TFLiteConverter.from_saved_model(FLAGS.weights)
+  converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS, tf.lite.OpsSet.SELECT_TF_OPS]
+  converter.allow_custom_ops = True
 
   if FLAGS.quantize_mode == 'float16':
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
